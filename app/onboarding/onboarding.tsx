@@ -1,6 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { Stack } from "expo-router";
-import { Pressable, SafeAreaView, useWindowDimensions } from "react-native";
+import { Pressable, SafeAreaView } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import useScreen from "./useScreen";
 import useStyles from "./useStyles";
@@ -11,68 +11,20 @@ import {
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import Animated, {
-  SlideOutLeft,
-  SlideInRight,
-  FadeIn,
-  FadeOut,
-  SlideInLeft,
-  SlideOutRight,
-  useAnimatedStyle,
-  withTiming,
-  useSharedValue,
-  withSequence,
-  runOnJS,
-} from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function OnboardingScreen() {
-  const { width } = useWindowDimensions();
-  const { onSkip, data, onbordingSteps, screenIndex, onContinue, onBack } =
-    useScreen();
+  const {
+    animatedStyle,
+    onSkip,
+    data,
+    onbordingSteps,
+    screenIndex,
+    onContinue,
+    fling,
+  } = useScreen();
   const styles = useStyles();
   const { colors } = useAppTheme();
-  const swipeDir = useSharedValue<string>("left");
-  console.log(swipeDir.value);
-
-  const position = useSharedValue(0); // Starting at the center (original position)
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: position.value }],
-  }));
-
-  const triggerRightAnimation = () => {
-    position.value = withSequence(
-      withTiming(-width, { duration: 300 }),
-      withTiming(width, { duration: 0 }),
-      withTiming(0, { duration: 300 }, () => {
-        runOnJS(onContinue)();
-      })
-    );
-  };
-  const triggerLeftAnimation = () => {
-    position.value = withSequence(
-      withTiming(width, { duration: 300 }),
-      withTiming(-width, { duration: 0 }),
-      withTiming(0, { duration: 300 }, () => {
-        runOnJS(onBack)();
-      })
-    );
-  };
-
-  const fling = Gesture.Simultaneous(
-    Gesture.Fling()
-      .direction(Directions.RIGHT)
-      .onEnd(() => {
-        triggerLeftAnimation();
-      })
-      .runOnJS(true),
-    Gesture.Fling()
-      .direction(Directions.LEFT)
-      .onEnd(() => {
-        triggerRightAnimation();
-      })
-      .runOnJS(true)
-  );
   return (
     <SafeAreaView style={styles.page}>
       <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} />
@@ -94,8 +46,8 @@ export default function OnboardingScreen() {
       <GestureDetector gesture={fling}>
         <View style={styles.pageContent}>
           <Animated.View
-            entering={FadeIn.duration(350)}
-            exiting={FadeOut.duration(350)}
+            entering={FadeIn.duration(300)}
+            exiting={FadeOut.duration(300)}
             key={`view-${data.icon}`}
           >
             <MaterialIcons style={styles.image} name={data.icon} size={100} />

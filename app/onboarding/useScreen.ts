@@ -3,6 +3,16 @@ import { router } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 
+import { Directions, Gesture } from "react-native-gesture-handler";
+import {
+  useAnimatedStyle,
+  withTiming,
+  useSharedValue,
+  withSequence,
+  runOnJS,
+} from "react-native-reanimated";
+import { useWindowDimensions } from "react-native";
+
 type onboardingStepsData = {
   icon: keyof typeof MaterialIcons.glyphMap;
   title: string;
@@ -28,8 +38,50 @@ const onbordingSteps: onboardingStepsData = [
 ];
 
 export default function useScreen() {
+  const { width } = useWindowDimensions();
   const [screenIndex, setScreenIndex] = useState(0);
+
   const data = onbordingSteps[screenIndex];
+
+  const position = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: position.value }],
+  }));
+
+  const triggerRightAnimation = () => {
+    position.value = withSequence(
+      withTiming(-width, { duration: 300 }),
+      withTiming(width, { duration: 0 }, () => {
+        runOnJS(onContinue)();
+      }),
+      withTiming(0, { duration: 300 })
+    );
+  };
+  const triggerLeftAnimation = () => {
+    position.value = withSequence(
+      withTiming(width, { duration: 300 }),
+      withTiming(-width, { duration: 0 }, () => {
+        runOnJS(onBack)();
+      }),
+      withTiming(0, { duration: 300 })
+    );
+  };
+
+  const fling = Gesture.Simultaneous(
+    Gesture.Fling()
+      .direction(Directions.RIGHT)
+      .onEnd(() => {
+        triggerLeftAnimation();
+      })
+      .runOnJS(true),
+    Gesture.Fling()
+      .direction(Directions.LEFT)
+      .onEnd(() => {
+        triggerRightAnimation();
+      })
+      .runOnJS(true)
+  );
 
   const onContinue = () => {
     if (screenIndex < onbordingSteps.length - 1)
@@ -52,5 +104,10 @@ export default function useScreen() {
     screenIndex,
     setScreenIndex,
     onBack,
+    fling,
+    triggerLeftAnimation,
+    triggerRightAnimation,
+    animatedStyle,
+    position,
   };
 }
