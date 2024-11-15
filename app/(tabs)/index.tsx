@@ -1,26 +1,26 @@
-import { Button, SafeAreaView, StyleSheet } from "react-native";
-import { AppButton, Text, View } from "@/components/Themed";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import useAppTheme from "@/constants/useAppTheme";
-import { Link, router } from "expo-router";
 import { CompleteOnboardingCard } from "@/components/CompleteOnboardingCard";
 import { useState } from "react";
+import { View } from "@/components/Themed";
 
 export default function TabOneScreen() {
   const { colors } = useAppTheme();
   const [onboardingCompleted, setOnboardingcompleted] = useState(false);
+  const { width } = useWindowDimensions();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.card}>
+      <ScrollView
+        style={[styles.pageContent, { paddingHorizontal: width * 0.01 }]}
+      >
         <CompleteOnboardingCard />
-      </View>
-      <View style={styles.buttonWraper}>
-        <AppButton
-          onPress={() => router.navigate("/onboarding/onboarding")}
-          title="go to onboarding"
-        />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -29,23 +29,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  card: {
-    backgroundColor: "white",
+  pageContent: {
     flex: 1,
-  },
-  buttonWraper: {
-    flex: 1,
-    flexDirection: "column-reverse",
-    bottom: 40,
-    alignItems: "center",
+    top: 10,
   },
 });

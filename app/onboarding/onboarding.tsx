@@ -6,11 +6,7 @@ import useScreen from "./useScreen";
 import useStyles from "./useStyles";
 import useAppTheme from "@/constants/useAppTheme";
 import { StatusBar } from "expo-status-bar";
-import {
-  Directions,
-  Gesture,
-  GestureDetector,
-} from "react-native-gesture-handler";
+import { GestureDetector } from "react-native-gesture-handler";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function OnboardingScreen() {

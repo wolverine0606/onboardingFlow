@@ -1,9 +1,4 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -13,6 +8,10 @@ import {
   AmaticSC_400Regular,
   AmaticSC_700Bold,
 } from "@expo-google-fonts/amatic-sc";
+import {
+  Ubuntu_500Medium_Italic,
+  Ubuntu_700Bold_Italic,
+} from "@expo-google-fonts/ubuntu";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -31,6 +30,8 @@ export default function RootLayout() {
     InterExtraBold: Inter_800ExtraBold,
     Amatic: AmaticSC_400Regular,
     AmaticBold: AmaticSC_700Bold,
+    ubuntuMedium: Ubuntu_500Medium_Italic,
+    ubuntuBold: Ubuntu_700Bold_Italic,
   });
 
   useEffect(() => {
@@ -54,9 +55,9 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DarkTheme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack>
+        <Stack screenOptions={{ headerTintColor: "black" }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
