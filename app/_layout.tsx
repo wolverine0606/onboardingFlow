@@ -4,17 +4,20 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { Inter_800ExtraBold, useFonts } from "@expo-google-fonts/inter";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
+  SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  ...FontAwesome.font,
+
   initialRouteName: "(tabs)",
 };
 
@@ -23,8 +26,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
+    Inter_800ExtraBold,
   });
 
   useEffect(() => {

@@ -5,6 +5,8 @@ import { Text } from "@/components/Themed";
 export function MonoText(props: TextProps) {
   const { text } = useAppTheme();
   return (
-    <Text style={[props.style, { fontFamily: "SpaceMono", color: "white" }]} />
+    <Text
+      style={[props.style, { fontFamily: "SpaceMono-Regular", color: text }]}
+    />
   );
 }

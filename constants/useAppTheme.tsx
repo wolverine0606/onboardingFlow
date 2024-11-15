@@ -1,9 +1,9 @@
-import Colors from "@/constants/Colors";
+import { light, dark } from "@/constants/Colors";
 import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 
 export default function useAppTheme() {
   const colorScheme = useColorScheme();
 
-  return Colors[colorScheme ?? "dark"];
+  return colorScheme === "dark" ? dark : light;
 }
