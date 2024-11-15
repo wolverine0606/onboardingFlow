@@ -2,21 +2,33 @@ const tintColorLight = "#000";
 const tintColorDark = "#fff";
 
 export const light = {
-  text: "#000",
-  background: "#fff",
-  button: "#fff",
-  darkText: "#000",
+  colors: {
+    text: "#000",
+    background: "#fff",
+    onboardingBackground: "#15141A",
+    buttonWhite: "#fff",
+    buttonGray: "",
+    darkText: "#000",
+    tabIconDefault: "#ccc",
+    gray: "#a5a5a5",
+    gold: "#FFDA11",
+  },
   tint: tintColorLight,
-  tabIconDefault: "#ccc",
   tabIconSelected: tintColorLight,
 };
 
 export const dark: typeof light = {
-  text: "#fff",
-  background: "#000",
-  button: "#fff",
-  darkText: "#000",
+  colors: {
+    text: "#fff",
+    background: "#000",
+    onboardingBackground: "#15141A",
+    buttonWhite: "#fff",
+    darkText: "#000",
+    tabIconDefault: "#ccc",
+    gray: "#a5a5a5",
+    buttonGray: "#302E38",
+    gold: "#FFDA11",
+  },
   tint: tintColorDark,
-  tabIconDefault: "#ccc",
   tabIconSelected: tintColorDark,
 };

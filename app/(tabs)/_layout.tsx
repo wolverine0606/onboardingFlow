@@ -15,7 +15,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const { tint, text } = useAppTheme();
+  const { tint, colors } = useAppTheme();
 
   return (
     <Tabs
@@ -36,7 +36,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="info-circle"
                     size={25}
-                    color={text}
+                    color={colors.text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

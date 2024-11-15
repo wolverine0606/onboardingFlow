@@ -14,22 +14,26 @@ import {
 } from "react-native";
 
 export type TextProps = DefaultText["props"];
-export type ViewProps = DefaultView["props"];
+export type ViewProps = DefaultView["props"] & {
+  bg?: string;
+};
 
 export function Text(props: TextProps) {
   const { style, ...otherProps } = props;
-  const { text } = useAppTheme();
+  const { colors } = useAppTheme();
 
-  return <DefaultText style={[{ color: text }, style]} {...otherProps} />;
+  return (
+    <DefaultText style={[{ color: colors.text }, style]} {...otherProps} />
+  );
 }
 
 export function View(props: ViewProps) {
   const { style, ...otherProps } = props;
-  const { background } = useAppTheme();
+  const { colors } = useAppTheme();
 
   return (
     <DefaultView
-      style={[{ backgroundColor: background }, style]}
+      style={[props.bg ? { backgroundColor: colors.background } : null, style]}
       {...otherProps}
     />
   );
@@ -47,15 +51,19 @@ export interface AppButtonProps {
 
 // Updated to use TouchableOpacity and accept `onPress` from parent props
 export const AppButton = (props: AppButtonProps) => {
-  const { button, darkText } = useAppTheme();
+  const { colors } = useAppTheme();
   const { title, onPress } = props;
 
   return (
     <TouchableOpacity
-      style={{ backgroundColor: button, borderRadius: 16, padding: 10 }}
+      style={{
+        backgroundColor: colors.buttonWhite,
+        borderRadius: 16,
+        padding: 10,
+      }}
       onPress={onPress}
     >
-      <Text style={{ color: darkText }}>{title}</Text>
+      <Text style={{ color: colors.darkText }}>{title}</Text>
     </TouchableOpacity>
   );
 };

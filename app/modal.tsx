@@ -5,7 +5,7 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import useAppTheme from "@/constants/useAppTheme";
 
 export default function ModalScreen() {
-  const { background } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Modal</Text>

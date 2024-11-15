@@ -3,10 +3,13 @@ import { TextProps } from "react-native";
 import { Text } from "@/components/Themed";
 
 export function MonoText(props: TextProps) {
-  const { text } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <Text
-      style={[props.style, { fontFamily: "SpaceMono-Regular", color: text }]}
+      style={[
+        props.style,
+        { fontFamily: "SpaceMono-Regular", color: colors.text },
+      ]}
     />
   );
 }

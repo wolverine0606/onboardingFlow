@@ -6,12 +6,9 @@ import useAppTheme from "@/constants/useAppTheme";
 import { Link, router } from "expo-router";
 
 export default function TabOneScreen() {
-  const { text, background } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Tab One</Text> */}
-      {/* <View style={styles.separator} /> */}
-      {/* <EditScreenInfo path="app/(tabs)/index.tsx" /> */}
       <View style={{ flex: 1, flexDirection: "column-reverse", bottom: 40 }}>
         <AppButton
           onPress={() => router.navigate("/onboarding")}

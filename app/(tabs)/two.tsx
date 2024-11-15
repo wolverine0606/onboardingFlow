@@ -5,7 +5,7 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import useAppTheme from "@/constants/useAppTheme";
 
 export default function TabTwoScreen() {
-  const { background } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>

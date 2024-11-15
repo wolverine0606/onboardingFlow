@@ -9,15 +9,16 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { Inter_800ExtraBold, useFonts } from "@expo-google-fonts/inter";
+import {
+  AmaticSC_400Regular,
+  AmaticSC_700Bold,
+} from "@expo-google-fonts/amatic-sc";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  ...FontAwesome.font,
-
   initialRouteName: "(tabs)",
 };
 
@@ -26,7 +27,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    Inter_800ExtraBold,
+    InterExtraBold: Inter_800ExtraBold,
+    Amatic: AmaticSC_400Regular,
+    AmaticBold: AmaticSC_700Bold,
   });
 
   useEffect(() => {

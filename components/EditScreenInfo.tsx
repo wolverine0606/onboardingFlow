@@ -7,7 +7,7 @@ import { MonoText } from "./StyledText";
 import useAppTheme from "@/constants/useAppTheme";
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  const { background, text } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -19,7 +19,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={[
             styles.codeHighlightContainer,
             styles.homeScreenFilename,
-            { backgroundColor: background },
+            { backgroundColor: colors.background },
           ]}
         >
           <MonoText>{path}</MonoText>
