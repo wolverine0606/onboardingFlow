@@ -11,7 +11,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <View style={{ flex: 1, flexDirection: "column-reverse", bottom: 40 }}>
         <AppButton
-          onPress={() => router.navigate("/onboarding")}
+          onPress={() => router.navigate("/onboarding/onboarding")}
           title="go to onboarding"
         />
       </View>

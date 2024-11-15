@@ -27,7 +27,7 @@ const onbordingSteps: onboardingStepsData = [
   },
 ];
 
-export const useScreen = () => {
+export default function useScreen() {
   const [screenIndex, setScreenIndex] = useState(0);
   const data = onbordingSteps[screenIndex];
 
@@ -36,10 +36,21 @@ export const useScreen = () => {
       return setScreenIndex(screenIndex + 1);
     router.back();
   };
+  const onBack = () => {
+    if (screenIndex) return setScreenIndex(screenIndex - 1);
+  };
   const onSkip = () => {
     if (screenIndex === onbordingSteps.length - 1) router.back();
     return setScreenIndex(onbordingSteps.length - 1);
   };
 
-  return { onContinue, onSkip, data };
-};
+  return {
+    onContinue,
+    onSkip,
+    data,
+    onbordingSteps,
+    screenIndex,
+    setScreenIndex,
+    onBack,
+  };
+}

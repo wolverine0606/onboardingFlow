@@ -3,6 +3,7 @@ const tintColorDark = "#fff";
 
 export const light = {
   colors: {
+    white: "#fff",
     text: "#000",
     background: "#fff",
     onboardingBackground: "#15141A",
@@ -19,6 +20,7 @@ export const light = {
 
 export const dark: typeof light = {
   colors: {
+    white: "#fff",
     text: "#fff",
     background: "#000",
     onboardingBackground: "#15141A",

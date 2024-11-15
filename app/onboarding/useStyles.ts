@@ -1,11 +1,23 @@
 import useAppTheme from "@/constants/useAppTheme";
 import { useWindowDimensions, StyleSheet } from "react-native";
 
-export const useStyles = () => {
+export default function useStyles() {
   const { colors } = useAppTheme();
   const { width } = useWindowDimensions();
 
   return StyleSheet.create({
+    stepIndicatorContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      gap: 5,
+      paddingHorizontal: 10,
+    },
+    stepIndicator: {
+      flex: 1,
+      height: 3,
+      backgroundColor: colors.gray,
+      borderRadius: 15,
+    },
     page: {
       justifyContent: "center",
       flex: 1,
@@ -57,4 +69,4 @@ export const useStyles = () => {
       fontFamily: "InterExtraBold",
     },
   });
-};
+}
