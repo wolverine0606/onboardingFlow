@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Text, View } from "@/components/Themed";
+import { AppText, AppView } from "@/components/Themed";
 
 import { ExternalLink } from "./ExternalLink";
 import { MonoText } from "./StyledText";
@@ -9,13 +9,13 @@ import useAppTheme from "@/constants/useAppTheme";
 export default function EditScreenInfo({ path }: { path: string }) {
   const { colors } = useAppTheme();
   return (
-    <View>
-      <View style={styles.getStartedContainer}>
-        <Text style={styles.getStartedText}>
+    <AppView>
+      <AppView style={styles.getStartedContainer}>
+        <AppText style={styles.getStartedText}>
           Open up the code for this screen:
-        </Text>
+        </AppText>
 
-        <View
+        <AppView
           style={[
             styles.codeHighlightContainer,
             styles.homeScreenFilename,
@@ -23,27 +23,27 @@ export default function EditScreenInfo({ path }: { path: string }) {
           ]}
         >
           <MonoText>{path}</MonoText>
-          <Text style={styles.getStartedText}>{path}</Text>
-        </View>
+          <AppText style={styles.getStartedText}>{path}</AppText>
+        </AppView>
 
-        <Text style={styles.getStartedText}>
+        <AppText style={styles.getStartedText}>
           Change any of the text, save the file, and your app will automatically
           update.
-        </Text>
-      </View>
+        </AppText>
+      </AppView>
 
-      <View style={styles.helpContainer}>
+      <AppView style={styles.helpContainer}>
         <ExternalLink
           style={styles.helpLink}
           href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
         >
-          <Text style={styles.helpLinkText}>
+          <AppText style={styles.helpLinkText}>
             Tap here if your app doesn't automatically update after making
             changes
-          </Text>
+          </AppText>
         </ExternalLink>
-      </View>
-    </View>
+      </AppView>
+    </AppView>
   );
 }
 

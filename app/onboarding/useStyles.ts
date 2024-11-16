@@ -49,7 +49,7 @@ export default function useStyles() {
       gap: 15,
     },
     buttonsRow: {
-      marginTop: 20,
+      marginTop: "auto",
       flexDirection: "row",
       paddingHorizontal: width * 0.03,
       gap: 50,

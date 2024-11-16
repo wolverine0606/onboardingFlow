@@ -8,7 +8,6 @@ import {
 import useAppTheme from "@/constants/useAppTheme";
 import { CompleteOnboardingCard } from "@/components/CompleteOnboardingCard";
 import { useState } from "react";
-import { View } from "@/components/Themed";
 
 export default function TabOneScreen() {
   const { colors } = useAppTheme();

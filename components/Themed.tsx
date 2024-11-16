@@ -18,7 +18,7 @@ export type ViewProps = DefaultView["props"] & {
   bg?: string;
 };
 
-export function Text(props: TextProps) {
+export function AppText(props: TextProps) {
   const { style, ...otherProps } = props;
   const { colors } = useAppTheme();
 
@@ -27,7 +27,7 @@ export function Text(props: TextProps) {
   );
 }
 
-export function View(props: ViewProps) {
+export function AppView(props: ViewProps) {
   const { style, ...otherProps } = props;
   const { colors } = useAppTheme();
 

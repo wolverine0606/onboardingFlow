@@ -23,23 +23,24 @@ const onbordingSteps: onboardingStepsData = [
   {
     icon: "celebration",
     title: "Welcome Aboard! Let’s Get You Started",
-    desc: "Thanks for joining us! We’re here to help you get up and running smoothly. Follow these simple steps to set up your account, personalize your experience, and discover all the great features waiting for you. Let’s make sure you’re ready to make the most of everything we have to offer!",
+    desc: "Thanks for joining us! We’re here to help you get up and running smoothly. \nFollow these simple steps to set up your account, personalize your experience, and discover all the great features waiting for you. \nLet’s make sure you’re ready to make the most of everything we have to offer!",
   },
   {
     icon: "settings",
     title: "Set Up Your Experience",
-    desc: "Let’s make this journey uniquely yours! Update your profile, choose your preferences, and tailor your experience to fit your needs. This will help us provide the most relevant features and content just for you.",
+    desc: "Let’s make this journey uniquely yours! Update your profile, choose your preferences, and tailor your experience to fit your needs. \nThis will help us provide the most relevant features and content just for you.",
   },
   {
     icon: "check-circle-outline",
     title: "You’re Ready to Go!",
-    desc: "You’re all set! Explore and start using all the amazing features now available to you. If you need any help, our support team is just a click away. Welcome to the community—we’re excited to see what you create!",
+    desc: "You’re all set! \nExplore and start using all the amazing features now available to you. \nIf you need any help, our support team is just a click away. Welcome to the community—we’re excited to see what you create!",
   },
 ];
 
 export default function useScreen() {
   const { width } = useWindowDimensions();
   const [screenIndex, setScreenIndex] = useState(0);
+  console.log(screenIndex);
 
   const data = onbordingSteps[screenIndex];
 
@@ -92,8 +93,17 @@ export default function useScreen() {
     if (screenIndex) return setScreenIndex(screenIndex - 1);
   };
   const onSkip = () => {
-    if (screenIndex === onbordingSteps.length - 1) router.back();
-    return setScreenIndex(onbordingSteps.length - 1);
+    if (screenIndex === onbordingSteps.length - 1) {
+      router.back();
+      return;
+    }
+    position.value = withSequence(
+      withTiming(-width, { duration: 100 }),
+      withTiming(width, { duration: 0 }, () => {
+        runOnJS(setScreenIndex)(onbordingSteps.length - 1);
+      }),
+      withTiming(0, { duration: 100 })
+    );
   };
 
   return {

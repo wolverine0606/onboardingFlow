@@ -1,4 +1,4 @@
-import { Text, View } from "@/components/Themed";
+import { AppText, AppView } from "@/components/Themed";
 import { Stack } from "expo-router";
 import { Pressable, SafeAreaView } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -16,18 +16,19 @@ export default function OnboardingScreen() {
     data,
     onbordingSteps,
     screenIndex,
-    onContinue,
     fling,
+    triggerRightAnimation,
   } = useScreen();
   const styles = useStyles();
   const { colors } = useAppTheme();
+
   return (
     <SafeAreaView style={styles.page}>
       <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} />
       <StatusBar style="light" />
-      <View style={styles.stepIndicatorContainer}>
+      <AppView style={styles.stepIndicatorContainer}>
         {onbordingSteps.map((_, index) => (
-          <View
+          <AppView
             key={index}
             style={[
               styles.stepIndicator,
@@ -36,11 +37,11 @@ export default function OnboardingScreen() {
                   index === screenIndex ? colors.gold : colors.gray,
               },
             ]}
-          ></View>
+          ></AppView>
         ))}
-      </View>
+      </AppView>
       <GestureDetector gesture={fling}>
-        <View style={styles.pageContent}>
+        <AppView style={styles.pageContent}>
           <Animated.View
             entering={FadeIn.duration(300)}
             exiting={FadeOut.duration(300)}
@@ -48,7 +49,7 @@ export default function OnboardingScreen() {
           >
             <MaterialIcons style={styles.image} name={data.icon} size={100} />
           </Animated.View>
-          <View style={styles.footer}>
+          <AppView style={styles.footer}>
             <Animated.Text
               key={`view-${data.title}`}
               style={[styles.title, animatedStyle]}
@@ -61,16 +62,19 @@ export default function OnboardingScreen() {
             >
               {data.desc}
             </Animated.Text>
-            <View style={styles.buttonsRow}>
-              <Pressable onPress={() => onSkip()}>
-                <Text style={styles.buttonText}>Skip</Text>
-              </Pressable>
-              <Pressable style={styles.button} onPress={() => onContinue()}>
-                <Text style={styles.buttonText}>Continue</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
+          </AppView>
+          <AppView style={styles.buttonsRow}>
+            <Pressable onPress={() => onSkip()}>
+              <AppText style={styles.buttonText}>Skip</AppText>
+            </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => triggerRightAnimation()}
+            >
+              <AppText style={styles.buttonText}>Continue</AppText>
+            </Pressable>
+          </AppView>
+        </AppView>
       </GestureDetector>
     </SafeAreaView>
   );

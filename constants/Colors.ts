@@ -14,4 +14,6 @@ export const colors = {
   redLight: "#FF8E8F",
   orange: "#FFB38E",
   orangeLight: "#FFFDCB",
+  red: "#c1121f",
+  silver: "#8e939f",
 };

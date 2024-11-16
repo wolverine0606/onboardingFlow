@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "@/components/Themed";
+import { AppText, AppView } from "@/components/Themed";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import useAppTheme from "@/constants/useAppTheme";
@@ -7,11 +7,11 @@ import useAppTheme from "@/constants/useAppTheme";
 export default function TabTwoScreen() {
   const { colors } = useAppTheme();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} />
+    <AppView style={styles.container}>
+      <AppText style={styles.title}>Tab Two</AppText>
+      <AppView style={styles.separator} />
       <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    </AppView>
   );
 }
 
