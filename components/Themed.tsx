@@ -4,17 +4,10 @@
  */
 
 import useAppTheme from "@/constants/useAppTheme";
-import { forwardRef, ReactNode } from "react";
-import {
-  Text as DefaultText,
-  View as DefaultView,
-  ButtonProps,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 
-export type TextProps = DefaultText["props"];
-export type ViewProps = DefaultView["props"] & {
+export type TextProps = Text["props"];
+export type ViewProps = View["props"] & {
   bg?: string;
 };
 
@@ -22,9 +15,7 @@ export function AppText(props: TextProps) {
   const { style, ...otherProps } = props;
   const { colors } = useAppTheme();
 
-  return (
-    <DefaultText style={[{ color: colors.text }, style]} {...otherProps} />
-  );
+  return <Text style={[{ color: colors.text }, style]} {...otherProps} />;
 }
 
 export function AppView(props: ViewProps) {
@@ -32,7 +23,7 @@ export function AppView(props: ViewProps) {
   const { colors } = useAppTheme();
 
   return (
-    <DefaultView
+    <View
       style={[props.bg ? { backgroundColor: colors.background } : null, style]}
       {...otherProps}
     />
@@ -63,7 +54,7 @@ export const AppButton = (props: AppButtonProps) => {
       }}
       onPress={onPress}
     >
-      <Text style={{ color: colors.darkText }}>{title}</Text>
+      <Text>{title}</Text>
     </TouchableOpacity>
   );
 };

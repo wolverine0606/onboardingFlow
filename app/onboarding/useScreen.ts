@@ -12,6 +12,9 @@ import {
   runOnJS,
 } from "react-native-reanimated";
 import { useWindowDimensions } from "react-native";
+import { useOnboarding } from "@/context/Contex";
+import { showMessage } from "react-native-flash-message";
+import useAppTheme from "@/constants/useAppTheme";
 
 type onboardingStepsData = {
   icon: keyof typeof MaterialIcons.glyphMap;
@@ -38,6 +41,8 @@ const onbordingSteps: onboardingStepsData = [
 ];
 
 export default function useScreen() {
+  const { colors } = useAppTheme();
+
   const { width } = useWindowDimensions();
 
   const [screenIndex, setScreenIndex] = useState(0);
@@ -45,6 +50,8 @@ export default function useScreen() {
   const data = onbordingSteps[screenIndex];
 
   const position = useSharedValue(0);
+
+  const { setIsOnboardingCompleted } = useOnboarding();
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: position.value }],
@@ -75,7 +82,7 @@ export default function useScreen() {
         withTiming(0, { duration: 300 })
       );
     } else {
-      router.navigate("/(tabs)");
+      goBack();
     }
   };
 
@@ -92,16 +99,34 @@ export default function useScreen() {
 
   const onSkip = () => {
     if (screenIndex === onbordingSteps.length - 1) {
-      router.navigate("/(tabs)");
-      return;
+      goBack();
+    } else {
+      position.value = withSequence(
+        withTiming(-width, { duration: 100 }),
+        withTiming(width, { duration: 0 }, () => {
+          runOnJS(setScreenIndex)(onbordingSteps.length - 1);
+        }),
+        withTiming(0, { duration: 100 })
+      );
     }
-    position.value = withSequence(
-      withTiming(-width, { duration: 100 }),
-      withTiming(width, { duration: 0 }, () => {
-        runOnJS(setScreenIndex)(onbordingSteps.length - 1);
-      }),
-      withTiming(0, { duration: 100 })
-    );
+  };
+
+  const goBack = () => {
+    setIsOnboardingCompleted(true);
+    router.navigate("/(tabs)");
+    showMessage({
+      message: "Onboarding completed!!!",
+      backgroundColor: colors.buttonGray,
+      type: "success",
+      titleStyle: {
+        fontFamily: "Ubuntu_700Bold_Italic",
+        fontSize: 18,
+        textAlign: "center",
+        flex: 1,
+        justifyContent: "center",
+        color: colors.white,
+      },
+    });
   };
 
   return {

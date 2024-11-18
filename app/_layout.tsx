@@ -15,6 +15,8 @@ import {
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import OnboardingProvider from "@/context/Contex";
+import FlashMessage from "react-native-flash-message";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -55,18 +57,21 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack
-          screenOptions={{
-            headerTintColor: "black",
-            headerTitleStyle: { color: "white" },
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </GestureHandlerRootView>
-    </ThemeProvider>
+    <OnboardingProvider>
+      <ThemeProvider value={DarkTheme}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack
+            screenOptions={{
+              headerTintColor: "black",
+              headerTitleStyle: { color: "white" },
+            }}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          </Stack>
+          <FlashMessage position="top" />
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </OnboardingProvider>
   );
 }

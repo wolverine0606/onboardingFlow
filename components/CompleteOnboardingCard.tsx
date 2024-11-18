@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AppText, AppView } from "./Themed";
 import { Pressable, StyleSheet, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,15 +7,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
-  withRepeat,
   withSequence,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
+import { useOnboarding } from "@/context/Contex";
+import { showMessage } from "react-native-flash-message";
 
 export const CardStyles = () => {
   const { colors } = useAppTheme();
@@ -75,6 +74,8 @@ export const CardStyles = () => {
 export const CompleteOnboardingCard = () => {
   const styles = CardStyles();
   const { colors } = useAppTheme();
+  const { isOnboardingCompleted } = useOnboarding();
+  console.log(isOnboardingCompleted);
 
   const opacity = useSharedValue(0);
 
@@ -91,11 +92,14 @@ export const CompleteOnboardingCard = () => {
   const clickStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
+  if (isOnboardingCompleted) {
+    return null;
+  }
 
   return (
     <Pressable
       style={styles.card}
-      onPress={() => router.navigate("/onboarding")}
+      onPress={() => router.navigate({ pathname: "/onboarding" })}
     >
       <LinearGradient
         colors={[

@@ -16,4 +16,5 @@ export const colors = {
   orangeLight: "#FFFDCB",
   red: "#c1121f",
   silver: "#8e939f",
+  messageColor: "",
 };
