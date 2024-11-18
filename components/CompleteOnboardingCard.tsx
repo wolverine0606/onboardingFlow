@@ -95,7 +95,7 @@ export const CompleteOnboardingCard = () => {
   return (
     <Pressable
       style={styles.card}
-      onPress={() => router.navigate("/onboarding/onboarding")}
+      onPress={() => router.navigate("/onboarding")}
     >
       <LinearGradient
         colors={[

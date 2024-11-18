@@ -24,7 +24,13 @@ export default function OnboardingScreen() {
 
   return (
     <SafeAreaView style={styles.page}>
-      <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} />
+      <Stack.Screen
+        options={{
+          animationTypeForReplace: "push",
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
       <StatusBar style="light" />
       <AppView style={styles.stepIndicatorContainer}>
         {onbordingSteps.map((_, index) => (

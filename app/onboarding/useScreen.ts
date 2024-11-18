@@ -39,8 +39,8 @@ const onbordingSteps: onboardingStepsData = [
 
 export default function useScreen() {
   const { width } = useWindowDimensions();
+
   const [screenIndex, setScreenIndex] = useState(0);
-  console.log(screenIndex);
 
   const data = onbordingSteps[screenIndex];
 
@@ -49,25 +49,6 @@ export default function useScreen() {
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: position.value }],
   }));
-
-  const triggerRightAnimation = () => {
-    position.value = withSequence(
-      withTiming(-width, { duration: 300 }),
-      withTiming(width, { duration: 0 }, () => {
-        runOnJS(onContinue)();
-      }),
-      withTiming(0, { duration: 300 })
-    );
-  };
-  const triggerLeftAnimation = () => {
-    position.value = withSequence(
-      withTiming(width, { duration: 300 }),
-      withTiming(-width, { duration: 0 }, () => {
-        runOnJS(onBack)();
-      }),
-      withTiming(0, { duration: 300 })
-    );
-  };
 
   const fling = Gesture.Simultaneous(
     Gesture.Fling()
@@ -84,17 +65,34 @@ export default function useScreen() {
       .runOnJS(true)
   );
 
-  const onContinue = () => {
-    if (screenIndex < onbordingSteps.length - 1)
-      return setScreenIndex(screenIndex + 1);
-    router.back();
+  const triggerRightAnimation = () => {
+    if (screenIndex < onbordingSteps.length - 1) {
+      position.value = withSequence(
+        withTiming(-width, { duration: 300 }),
+        withTiming(width, { duration: 0 }, () => {
+          runOnJS(setScreenIndex)(screenIndex + 1);
+        }),
+        withTiming(0, { duration: 300 })
+      );
+    } else {
+      router.navigate("/(tabs)");
+    }
   };
-  const onBack = () => {
-    if (screenIndex) return setScreenIndex(screenIndex - 1);
+
+  const triggerLeftAnimation = () => {
+    if (screenIndex)
+      position.value = withSequence(
+        withTiming(width, { duration: 300 }),
+        withTiming(-width, { duration: 0 }, () => {
+          runOnJS(setScreenIndex)(screenIndex - 1);
+        }),
+        withTiming(0, { duration: 300 })
+      );
   };
+
   const onSkip = () => {
     if (screenIndex === onbordingSteps.length - 1) {
-      router.back();
+      router.navigate("/(tabs)");
       return;
     }
     position.value = withSequence(
@@ -107,17 +105,12 @@ export default function useScreen() {
   };
 
   return {
-    onContinue,
+    animatedStyle,
     onSkip,
     data,
     onbordingSteps,
     screenIndex,
-    setScreenIndex,
-    onBack,
     fling,
-    triggerLeftAnimation,
     triggerRightAnimation,
-    animatedStyle,
-    position,
   };
 }
